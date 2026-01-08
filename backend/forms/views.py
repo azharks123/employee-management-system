@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
+from .models import Form
+from .serializers import FormSerializer
 
-# Create your views here.
+
+class FormViewSet(ModelViewSet):
+    queryset = Form.objects.all()
+    serializer_class = FormSerializer
+    permission_classes = [IsAuthenticated]

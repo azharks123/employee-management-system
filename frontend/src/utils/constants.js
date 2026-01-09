@@ -1,5 +1,5 @@
 import sha256 from "crypto-js/sha256";
-// import { logout } from "../api/api";
+import { logout } from "../api/api";
 
 export const hashPassword = async (password) => {
   const hashedPassword = sha256(password).toString();

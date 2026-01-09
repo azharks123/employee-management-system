@@ -67,7 +67,6 @@ const EmployeeCreate = () => {
             <h2>Create Employee</h2>
 
             <select value={selectedForm} onChange={handleFormChange}>
-                <option value="">Select Form</option>
                 {forms.map((form) => (
                     <option key={form.id} value={form.id}>
                         {form.name}

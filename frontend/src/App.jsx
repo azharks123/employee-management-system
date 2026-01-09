@@ -30,6 +30,7 @@ const App = () => {
       <CssBaseline />
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
+          <Navbar/>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path={"/register"} element={<Register />} />

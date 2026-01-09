@@ -19,9 +19,9 @@ const FormList = () => {
     <div>
       <h2>Forms</h2>
 
-      <button onClick={() => navigate("/forms/create")}>
+      {/* <button onClick={() => navigate("/forms/create")}>
         Create New Form
-      </button>
+      </button> */}
 
       <ul>
         {forms.map((form) => (
@@ -30,13 +30,13 @@ const FormList = () => {
             <button onClick={() => navigate(`/forms/${form.id}/edit`)}>
               Edit
             </button>
-            <button
+            {/* <button
               onClick={() =>
                 navigate(`/employees/create?form=${form.id}`)
               }
             >
               Create Employee
-            </button>
+            </button> */}
           </li>
         ))}
       </ul>

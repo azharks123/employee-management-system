@@ -1,35 +1,89 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { Suspense, lazy } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import ProtectedRoute from "./components/layout/ProtectedRoute";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Navbar from "./components/common/Navbar";
+import EmployeeList from "./pages/employees/EmployeeList";
+import EmployeeCreate from "./pages/employees/EmployeeCreate";
 
-function App() {
-  const [count, setCount] = useState(0)
+const Login = lazy(() => import("./pages/auth/Login"));
+const Register = lazy(() => import("./pages/auth/Register"));
+const FormList = lazy(() => import("./pages/forms/FormList"));
+const FormEdit = lazy(() => import("./pages/forms/FormEdit"));
+const FormCreate = lazy(() => import("./pages/forms/FormCreate"));
 
+const theme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
+
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path={"/register"} element={<Register />} />
+            <Route
+              path="/forms"
+              element={
+                <ProtectedRoute>
+                  <FormList />
+                </ProtectedRoute>
+              }
+            />
 
-export default App
+            <Route
+              path="/forms/create"
+              element={
+                <ProtectedRoute>
+                  <FormCreate />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/forms/:id/edit"
+              element={
+                <ProtectedRoute>
+                  <FormEdit />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/employees/create"
+              element={
+                <ProtectedRoute>
+                  <EmployeeCreate />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/employees"
+              element={
+                <ProtectedRoute>
+                  <EmployeeList />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+        </Suspense>
+      </Router>
+    </ThemeProvider>
+  );
+};
+
+export default App;

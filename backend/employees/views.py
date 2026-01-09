@@ -29,12 +29,15 @@ class EmployeeView(APIView):
         label = request.query_params.get("label")
         value = request.query_params.get("value")
 
-        if label and value:
+        if label:
             queryset = queryset.filter(
-                values__field__label__iexact=label,
-                values__value__icontains=value,
+                values__field__label__iexact=label
             )
 
+        if value:
+            queryset = queryset.filter(
+                values__value__icontains=value
+            )
         serializer = EmployeeListSerializer(queryset, many=True)
         return Response(serializer.data)
 

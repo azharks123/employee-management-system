@@ -1,0 +1,17 @@
+let apiUrl;
+let baseUrl;
+let frontendBaseUrl;
+
+// http://127.0.0.1:8000/
+const { protocol, hostname, port, origin } = window?.location;
+apiUrl = `${protocol}//${hostname}:8000/api`;
+baseUrl = `${protocol}//${hostname}:8000/`;
+frontendBaseUrl = `${protocol}//${hostname}:${port}`;
+const config = {
+  apiserver: apiUrl,
+  baseUrl: baseUrl,
+  frontendBaseUrl: frontendBaseUrl,
+};
+
+export default config;
+export const hostUrl = window.location.origin;

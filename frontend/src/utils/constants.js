@@ -1,5 +1,5 @@
 import sha256 from "crypto-js/sha256";
-import { logout } from "../api/api";
+// import { logout } from "../api/api";
 
 export const hashPassword = async (password) => {
   const hashedPassword = sha256(password).toString();
@@ -7,13 +7,19 @@ export const hashPassword = async (password) => {
 };
 
 export const handleLogout = () => {
-  logout()
-    .then(() => {
-      localStorage.clear();
-    })
-    .catch((err) => {
-      console.error("Logout failed", err);
-    });
+
+  console.log("Logout");
+  localStorage.clear();
+
+  // logout()
+  //   .then(() => {
+  //     console.log("clear");
+      
+  //     localStorage.clear();
+  //   })
+  //   .catch((err) => {
+  //     console.error("Logout failed", err);
+  //   });
   window.location.href = "/login";
 };
 

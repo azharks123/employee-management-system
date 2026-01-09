@@ -2,6 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { createForm } from "../../api/api";
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  TextField,
+  Typography,
+  MenuItem,
+} from "@mui/material";
 
 const FormCreate = () => {
   const [name, setName] = useState("");
@@ -33,71 +42,92 @@ const FormCreate = () => {
   };
 
   return (
-    <div>
-      <h2>Create Form</h2>
+    <Container maxWidth="md">
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          Create Form
+        </Typography>
 
-      <input
-        placeholder="Form Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+        {/* Form Name */}
+        <Paper sx={{ p: 2, mb: 3 }}>
+          <TextField
+            fullWidth
+            label="Form Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </Paper>
 
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="fields">
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {fields.map((field, index) => (
-                <Draggable
-                  key={index}
-                  draggableId={`field-${index}`}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={{
-                        padding: 10,
-                        marginBottom: 8,
-                        border: "1px solid #ccc",
-                        background: "#fafafa",
-                        ...provided.draggableProps.style,
-                      }}
-                    >
-                      <input
-                        placeholder="Label"
-                        value={field.label}
-                        onChange={(e) =>
-                          updateField(index, "label", e.target.value)
-                        }
-                      />
-
-                      <select
-                        value={field.field_type}
-                        onChange={(e) =>
-                          updateField(index, "field_type", e.target.value)
-                        }
+        {/* Draggable Fields */}
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="fields">
+            {(provided) => (
+              <Box ref={provided.innerRef} {...provided.droppableProps}>
+                {fields.map((field, index) => (
+                  <Draggable
+                    key={index}
+                    draggableId={`field-${index}`}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <Paper
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        sx={{
+                          p: 2,
+                          mb: 2,
+                          display: "flex",
+                          gap: 2,
+                          alignItems: "center",
+                        }}
+                        style={provided.draggableProps.style}
                       >
-                        <option value="text">Text</option>
-                        <option value="number">Number</option>
-                        <option value="date">Date</option>
-                        <option value="password">Password</option>
-                      </select>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+                        <TextField
+                          label="Label"
+                          value={field.label}
+                          onChange={(e) =>
+                            updateField(index, "label", e.target.value)
+                          }
+                          sx={{ flex: 1 }}
+                        />
 
-      <button onClick={addField}>Add Field</button>
-      <br />
-      <button onClick={handleSubmit}>Save Form</button>
-    </div>
+                        <TextField
+                          select
+                          label="Field Type"
+                          value={field.field_type}
+                          onChange={(e) =>
+                            updateField(index, "field_type", e.target.value)
+                          }
+                          sx={{ width: 160 }}
+                        >
+                          <MenuItem value="text">Text</MenuItem>
+                          <MenuItem value="number">Number</MenuItem>
+                          <MenuItem value="date">Date</MenuItem>
+                          <MenuItem value="password">Password</MenuItem>
+                        </TextField>
+                      </Paper>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </Box>
+            )}
+          </Droppable>
+        </DragDropContext>
+
+        {/* Actions */}
+        <Box sx={{ mt: 3, display: "flex", gap: 2 }}>
+          <Button variant="outlined" onClick={addField}>
+            Add Field
+          </Button>
+
+          <Button variant="contained" onClick={handleSubmit}>
+            Save Form
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

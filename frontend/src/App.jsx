@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -23,14 +24,12 @@ const theme = createTheme({
     mode: "light",
   },
 });
-
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
-          <Navbar/>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path={"/register"} element={<Register />} />
@@ -38,6 +37,7 @@ const App = () => {
               path="/forms"
               element={
                 <ProtectedRoute>
+                  <Navbar />
                   <FormList />
                 </ProtectedRoute>
               }
@@ -47,6 +47,7 @@ const App = () => {
               path="/forms/create"
               element={
                 <ProtectedRoute>
+                  <Navbar />
                   <FormCreate />
                 </ProtectedRoute>
               }
@@ -56,6 +57,7 @@ const App = () => {
               path="/forms/:id/edit"
               element={
                 <ProtectedRoute>
+                  <Navbar />
                   <FormEdit />
                 </ProtectedRoute>
               }
@@ -65,6 +67,7 @@ const App = () => {
               path="/employees/create"
               element={
                 <ProtectedRoute>
+                  <Navbar />
                   <EmployeeCreate />
                 </ProtectedRoute>
               }
@@ -74,6 +77,7 @@ const App = () => {
               path="/employees"
               element={
                 <ProtectedRoute>
+                  <Navbar />
                   <EmployeeList />
                 </ProtectedRoute>
               }

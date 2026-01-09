@@ -1,95 +1,141 @@
 import { useEffect, useState } from "react";
 import { getEmployees, deleteEmployee } from "../../api/api";
+import {
+  Box,
+  Button,
+  Container,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 const EmployeeList = () => {
-    const [employees, setEmployees] = useState([]);
-    const [label, setLabel] = useState("");
-    const [value, setValue] = useState("");
+  const [employees, setEmployees] = useState([]);
+  const [label, setLabel] = useState("");
+  const [value, setValue] = useState("");
 
-    useEffect(() => {
-        loadEmployees();
-    }, []);
+  useEffect(() => {
+    loadEmployees();
+  }, []);
 
-    const loadEmployees = async (params = {}) => {
-        const res = await getEmployees(params);
-        setEmployees(res.data);
-    };
+  const loadEmployees = async (params = {}) => {
+    const res = await getEmployees(params);
+    setEmployees(res.data);
+  };
 
-    const handleSearch = () => {
-        if (label || value) {
-            loadEmployees({ label, value });
-        } else {
-            loadEmployees();
-        }
-    };
+  const handleSearch = () => {
+    if (label || value) {
+      loadEmployees({ label, value });
+    } else {
+      loadEmployees();
+    }
+  };
 
-    const handleClear = () => {
-        loadEmployees();
-        setLabel('')
-        setValue('')
-    };
+  const handleClear = () => {
+    loadEmployees();
+    setLabel("");
+    setValue("");
+  };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Delete this employee?")) {
-            await deleteEmployee(id);
-            loadEmployees();
-        }
-    };
+  const handleDelete = async (id) => {
+    if (window.confirm("Delete this employee?")) {
+      await deleteEmployee(id);
+      loadEmployees();
+    }
+  };
 
-    return (
-        <div>
-            <h2>Employee List</h2>
+  return (
+    <Container maxWidth="lg">
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          Employee List
+        </Typography>
 
-            {/* Search Section */}
-            <div style={{ marginBottom: "20px" }}>
-                <input
-                    placeholder="Field Label"
-                    value={label}
-                    onChange={(e) => setLabel(e.target.value)}
-                />
+        {/* Search Section */}
+        <Paper sx={{ p: 2, mb: 3 }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <TextField
+              label="Field Label"
+              size="small"
+              value={label}
+              onChange={(e) => setLabel(e.target.value)}
+            />
 
-                <input
-                    placeholder="Value"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                />
+            <TextField
+              label="Value"
+              size="small"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
 
-                <button onClick={handleSearch}>Search</button>
-                <button onClick={handleClear}>Clear</button>
-            </div>
+            <Button variant="contained" onClick={handleSearch}>
+              Search
+            </Button>
 
-            {/* Employee Records */}
-            {employees.length === 0 && <p>No employees found</p>}
+            <Button variant="outlined" onClick={handleClear}>
+              Clear
+            </Button>
+          </Box>
+        </Paper>
 
-            {employees.map((emp) => (
-                <div
-                    key={emp.id}
-                    style={{
-                        border: "1px solid #ccc",
-                        padding: "10px",
-                        marginBottom: "10px",
-                    }}
-                >
-                    <strong>Employee ID:</strong> {emp.id}
-                    <br />
-                    <strong>Form ID:</strong> {emp.form}
-                    <br />
+        {/* Employee Table */}
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell><strong>Employee ID</strong></TableCell>
+                <TableCell><strong>Form ID</strong></TableCell>
+                <TableCell><strong>Details</strong></TableCell>
+                <TableCell align="right"><strong>Actions</strong></TableCell>
+              </TableRow>
+            </TableHead>
 
-                    <ul>
-                        {Object.entries(emp.data).map(([label, value]) => (
-                            <li key={label}>
-                                <strong>{label}:</strong> {value}
-                            </li>
-                        ))}
-                    </ul>
+            <TableBody>
+              {employees.map((emp) => (
+                <TableRow key={emp.id} hover>
+                  <TableCell>{emp.id}</TableCell>
+                  <TableCell>{emp.form}</TableCell>
 
-                    <button onClick={() => handleDelete(emp.id)}>
-                        Delete
-                    </button>
-                </div>
-            ))}
-        </div>
-    );
+                  <TableCell>
+                    {Object.entries(emp.data).map(([label, value]) => (
+                      <Typography key={label} variant="body2">
+                        <strong>{label}:</strong> {value}
+                      </Typography>
+                    ))}
+                  </TableCell>
+
+                  <TableCell align="right">
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleDelete(emp.id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              {employees.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No employees found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Container>
+  );
 };
 
 export default EmployeeList;

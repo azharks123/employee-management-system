@@ -47,19 +47,19 @@ apiGateway.interceptors.response.use(
         }
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
-        // localStorage.removeItem(CONST.REFRESH);
-        // localStorage.removeItem(CONST.TOKEN);
+        localStorage.removeItem(CONST.REFRESH);
+        localStorage.removeItem(CONST.TOKEN);
         // window.location.href = "/login";
       }
     }
-  }
+  // }
 
   // if (error.response && error.response.status === 420) {
   //   return logout();
   // }
 
-  // return Promise.reject(error);
-  // }
+  return Promise.reject(error);
+  }
 );
 
 export default apiGateway;

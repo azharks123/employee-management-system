@@ -1,12 +1,11 @@
 import {useState} from "react";
 import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem } from "@mui/material";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CONST, handleLogout } from "../../utils/constants";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const userName = localStorage.getItem(CONST.USER_NAME);
   const [menu, setMenu] = useState('');

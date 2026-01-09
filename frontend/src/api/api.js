@@ -5,9 +5,9 @@ export const login = (credential) => {
     return apiGateway.post(`/auth/login/`, credential);
 };
 
-export const logout = (refresh = localStorage.getItem(CONST.REFRESH)) => {
-    return apiGateway.post(`/logout/`, { refresh });
-};
+// export const logout = (refresh = localStorage.getItem(CONST.REFRESH)) => {
+//     return apiGateway.post(`auth/logout/`, { refresh });
+// };
 
 export const register = (credential) => {
     return apiGateway.post(`/auth/register/`, credential);
@@ -26,6 +26,11 @@ export const getFormById = (id) => {
 export const editFormById = (id, name, fields) => {
     return apiGateway.put(`forms/${id}/`, {name, fields});
 }
+
+export const deleteFormById = (id) => {
+    return apiGateway.delete(`forms/${id}/`);
+}
+
 export const createEmployee = (payload) => {
     return apiGateway.post("employees/", payload);
 }

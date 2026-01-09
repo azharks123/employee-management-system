@@ -11,6 +11,7 @@ import {
   IconButton,
   MenuItem,
   Paper,
+  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -38,7 +39,7 @@ const FormEdit = () => {
   };
 
   const addField = () => {
-    setFields([...fields, { label: "", field_type: "text" }]);
+    setFields([...fields, { label: "", field_type: "text", is_required: false }]);
   };
 
   const removeField = (index) => {
@@ -137,6 +138,15 @@ const FormEdit = () => {
                         >
                           <DeleteIcon />
                         </IconButton>
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Typography variant="body2">Required</Typography>
+                          <Switch
+                            checked={field.is_required}
+                            onChange={(e) =>
+                              updateField(index, "is_required", e.target.checked)
+                            }
+                          />
+                        </Box>
                       </Paper>
                     )}
                   </Draggable>

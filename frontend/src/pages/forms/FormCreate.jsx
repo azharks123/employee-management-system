@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
   MenuItem,
+  Switch,
 } from "@mui/material";
 
 const FormCreate = () => {
@@ -18,7 +19,7 @@ const FormCreate = () => {
   const navigate = useNavigate();
 
   const addField = () => {
-    setFields([...fields, { label: "", field_type: "text" }]);
+    setFields([...fields, { label: "", field_type: "text", is_required: false }]);
   };
 
   const updateField = (index, key, value) => {
@@ -106,6 +107,17 @@ const FormCreate = () => {
                           <MenuItem value="date">Date</MenuItem>
                           <MenuItem value="password">Password</MenuItem>
                         </TextField>
+
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Typography variant="body2">Required</Typography>
+                          <Switch
+                            checked={field.is_required}
+                            onChange={(e) =>
+                              updateField(index, "is_required", e.target.checked)
+                            }
+                          />
+                        </Box>
+
                       </Paper>
                     )}
                   </Draggable>
@@ -122,7 +134,7 @@ const FormCreate = () => {
             Add Field
           </Button>
 
-          <Button variant="contained" onClick={handleSubmit}>
+          <Button disabled={fields.length == 0} variant="contained" onClick={handleSubmit}>
             Save Form
           </Button>
         </Box>

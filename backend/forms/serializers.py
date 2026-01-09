@@ -5,7 +5,7 @@ from .models import Form, FormField
 class FormFieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormField
-        fields = ("id", "label", "field_type", "order")
+        fields = ("id", "label", "field_type", "order", "is_required")
 
 
 class FormSerializer(serializers.ModelSerializer):
@@ -25,6 +25,7 @@ class FormSerializer(serializers.ModelSerializer):
                 label=field["label"],
                 field_type=field["field_type"],
                 order=index,
+                is_required=field["is_required"],
             )
         return form
 
@@ -40,5 +41,6 @@ class FormSerializer(serializers.ModelSerializer):
                 label=field["label"],
                 field_type=field["field_type"],
                 order=index,
+                is_required=field["is_required"],
             )
         return instance

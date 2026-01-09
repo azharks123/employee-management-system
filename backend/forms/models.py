@@ -22,6 +22,7 @@ class FormField(models.Model):
     label = models.CharField(max_length=100)
     field_type = models.CharField(max_length=20, choices=FIELD_TYPES)
     order = models.PositiveIntegerField(default=0)
+    is_required = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["order"]

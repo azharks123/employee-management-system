@@ -70,25 +70,26 @@ The backend is built using **Django REST Framework**, and the frontend is built 
 
 ## 📁 Project Structure
 
+```
 employee-management/
-│
 ├── backend/
 │ ├── accounts/
 │ ├── forms/
 │ ├── employees/
-│ ├── manage.py
+│ └── manage.py
 │
 ├── frontend/
-│ ├── src/
-│ │ ├── api/
-│ │ ├── pages/
-│ │ ├── components/
-│ │ └── App.jsx
+│ └── src/
+│ ├── api/
+│ ├── pages/
+│ ├── components/
+│ └── App.jsx
 │
 ├── postman/
 │ └── Employee_Management_System.postman_collection.json
 │
 └── README.md
+```
 
 ---
 
